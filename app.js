@@ -101,7 +101,7 @@ function generateRandomImages() {
   while (rightIndex === leftIndex) {
     rightIndex = Math.floor(Math.random() * SeriesImage.allImages.length);
   }
-  while (centerIndex === rightIndex || centerIndex === leftIndex) { centerIndex = Math.floor(Math.random() * mallImage.allImages.length);
+  while (centerIndex === rightIndex || centerIndex === leftIndex) { centerIndex = Math.floor(Math.random() * SeriesImage.allImages.length);
   }
 var leftImage = SeriesImage.allImages[leftIndex];
 var centerImage = SeriesImage.allImages[centerIndex];
