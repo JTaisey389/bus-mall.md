@@ -1,10 +1,30 @@
 "use strict";
-// Empty array to pass through random images and to check and make sure the same images do not pull up
-// Global Arrays
+function getMystuffFromStorage() {
+  var productFromStorage = localStorage.getItem('productArray');
+  console.log(productFromStorage);
+  if (productFromStorage===null) {
+    return null;
+  }
+  var parsedstoredTreasure = JSON.parse(productFromStorage);
+  return parsedstoredTreasure;
+}
+
+var storageResults = getMystuffFromStorage();
+console.log(storageResults, 'storageResults');
+if (storageResults === null) {
+  // here i create the functions that makes all of my products.
+  makeProducts();
+
+
+}
+else  {
+// my storage results are going to be SeriesImage.allImages array
+  SeriesImage.allImages = storageResults;
+}
 var arrayImages = [];
 var indexPictures = [];
 
-// select elements from my HTML to render the images/ Variables
+// select elements from my HTML to render the images
 var imageContainer = document.getElementById("image-container");
 var leftImageDOM = document.getElementById("left-image");
 var centerImageDOM = document.getElementById("center-image");
@@ -22,7 +42,33 @@ function SeriesImage(image, name) {
 }
 SeriesImage.allImages = [];
 
+
 // creates the createImage, and runs the operations within the constructor
+// This is creating the products ie = products
+function getMystuffFromStorage() {
+  var productFromStorage = localStorage.getItem('productArray');
+  console.log(productFromStorage);
+  if (productFromStorage===null) {
+    return null;
+  }
+  var parsedstoredTreasure = JSON.parse(productFromStorage);
+  return parsedstoredTreasure;
+}
+
+var storageResults = getMystuffFromStorage();
+console.log(storageResults, 'storageResults');
+if (storageResults === null) {
+  // here i create the functions that makes all of my products.
+  makeProducts();
+
+
+}
+else  {
+// my storage results are going to be SeriesImage.allImages array
+  SeriesImage.allImages = storageResults;
+}
+
+function makeProducts() {
 new SeriesImage("images/bag.jpg", "bag");
 new SeriesImage("images/banana.jpg", "banana");
 new SeriesImage("images/bathroom.jpg", "bathroom");
@@ -44,24 +90,29 @@ new SeriesImage("images/usb.gif", "usb");
 new SeriesImage("images/water-can.jpg", "water-can");
 new SeriesImage("images/wine-glass.jpg", "wine-glass");
 console.log(SeriesImage.allImages);
+}
 
-// generates three random images and compares the random images to check and see if they are the same, if they happen to be it will change the image
+// generates three random images and compares the random images to check and see if they are the same, if they happen to be it will change the image. Uses a while loop to check
 function generateRandomImages() {
-  // randomIndex
-  for (var i = 0; i < 3; i++) {
-    var randomIndex = Math.floor(Math.random() * SeriesImage.allImages.length);
-    while (indexPictures.includes(randomIndex)) {
-      randomIndex = Math.floor(Math.random() * SeriesImage.allImages.length);
-    }
-    // console.log(randomIndex);
-    arrayImages[i] = SeriesImage.allImages[randomIndex];
-    console.log(randomIndex);
+  var leftIndex = Math.floor(Math.random() * SeriesImage.allImages.length);
+  var centerIndex = Math.floor(Math.random() * SeriesImage.allImages.length);
+  var rightIndex = Math.floor(Math.random() * SeriesImage.allImages.length);
+  
+  while (rightIndex === leftIndex) {
+    rightIndex = Math.floor(Math.random() * SeriesImage.allImages.length);
   }
-  return arrayImages;
+  while (centerIndex === rightIndex || centerIndex === leftIndex) { centerIndex = Math.floor(Math.random() * mallImage.allImages.length);
+  }
+var leftImage = SeriesImage.allImages[leftIndex];
+var centerImage = SeriesImage.allImages[centerIndex];
+var rightImage = SeriesImage.allImages[rightIndex];
+
+return [leftImage, centerImage, rightImage];
 }
 
 // renders the images to the HTML page
 function renderImages(leftImage, centerImage, rightImage) {
+
   leftImageDOM.src = leftImage.image;
 
   leftImage.timesShown++;
@@ -90,13 +141,19 @@ function addClickCount(event) {
   if (totalClicks === 25) {
     imageContainer.removeEventListener("click", addClickCount);
     generateData();
+    let productsToBeStored = JSON.stringify(SeriesImage.allImages);
+    localStorage.setItem('productArray', productsToBeStored);
+    
   }
-  generateRandomImages();
-  renderImages(arrayImages[0], arrayImages[1], arrayImages[2]);
+  var images = generateRandomImages();
+  renderImages(images[0], images[1], images[2]);
 }
 
-generateRandomImages();
-renderImages(arrayImages[0], arrayImages[1], arrayImages[2]);
+var images = generateRandomImages();
+  renderImages(images[0], images[1], images[2]);
+
+
+// Add the local storage possibly in here
 
 // Results list
 function resultList() {
@@ -273,3 +330,13 @@ function generateData() {
     },
   });
 }
+
+// let productFromStorage = localStorage.getItem('productArray');
+// console.log(productFromStorage);
+
+// let parsedstoredTreasure = JSON.parse(productFromStorage);
+// let productsToBeStored = JSON.stringify(SeriesImage.allImages);
+
+// localStorage.setItem('productArray', productsToBeStored);
+
+
