@@ -1,4 +1,9 @@
 "use strict";
+
+var totalClicks = 0;
+var arrayImages = [];
+var indexPictures = [];
+
 function getMystuffFromStorage() {
   var productFromStorage = localStorage.getItem('productArray');
   console.log(productFromStorage);
@@ -9,27 +14,6 @@ function getMystuffFromStorage() {
   return parsedstoredTreasure;
 }
 
-var storageResults = getMystuffFromStorage();
-console.log(storageResults, 'storageResults');
-if (storageResults === null) {
-  // here i create the functions that makes all of my products.
-  makeProducts();
-
-
-}
-else  {
-// my storage results are going to be SeriesImage.allImages array
-  SeriesImage.allImages = storageResults;
-}
-var arrayImages = [];
-var indexPictures = [];
-
-// select elements from my HTML to render the images
-var imageContainer = document.getElementById("image-container");
-var leftImageDOM = document.getElementById("left-image");
-var centerImageDOM = document.getElementById("center-image");
-var rightImageDOM = document.getElementById("right-image");
-var roundsOfVoting = 25;
 
 // Constructing the function for all the images on the SeriesImage Constructor
 function SeriesImage(image, name) {
@@ -37,10 +21,24 @@ function SeriesImage(image, name) {
   this.timesShown = 0;
   this.image = image;
   this.name = name;
-
+  
   SeriesImage.allImages.push(this);
 }
 SeriesImage.allImages = [];
+var storageResults = getMystuffFromStorage();
+console.log(storageResults, 'storageResults');
+if (storageResults === null) {
+  // here i create the functions that makes all of my products.
+  makeProducts();
+  
+  
+}
+else  {
+  // my storage results are going to be SeriesImage.allImages array
+  SeriesImage.allImages = storageResults;
+}
+
+// select elements from my HTML to render the images
 
 
 // creates the createImage, and runs the operations within the constructor
@@ -55,43 +53,35 @@ function getMystuffFromStorage() {
   return parsedstoredTreasure;
 }
 
-var storageResults = getMystuffFromStorage();
-console.log(storageResults, 'storageResults');
-if (storageResults === null) {
-  // here i create the functions that makes all of my products.
-  makeProducts();
-
-
-}
-else  {
-// my storage results are going to be SeriesImage.allImages array
-  SeriesImage.allImages = storageResults;
-}
-
 function makeProducts() {
-new SeriesImage("images/bag.jpg", "bag");
-new SeriesImage("images/banana.jpg", "banana");
-new SeriesImage("images/bathroom.jpg", "bathroom");
-new SeriesImage("images/boots.jpg", "boots");
-new SeriesImage("images/breakfast.jpg", "breakfast");
-new SeriesImage("images/bubblegum.jpg", "bubblegum");
-new SeriesImage("images/chair.jpg", "chair");
-new SeriesImage("images/cthulhu.jpg", "cthulhu");
-new SeriesImage("images/dog-duck.jpg", "dog-duck");
-new SeriesImage("images/dragon.jpg", "dragon");
-new SeriesImage("images/pen.jpg", "pen");
-new SeriesImage("images/pet-sweep.jpg", "pet-sweep");
-new SeriesImage("images/scissors.jpg", "scissors");
-new SeriesImage("images/shark.jpg", "shark");
-new SeriesImage("images/sweep.png", "sweep");
-new SeriesImage("images/tauntaun.jpg", "tauntaun");
-new SeriesImage("images/unicorn.jpg", "unicorn");
-new SeriesImage("images/usb.gif", "usb");
-new SeriesImage("images/water-can.jpg", "water-can");
-new SeriesImage("images/wine-glass.jpg", "wine-glass");
-console.log(SeriesImage.allImages);
+  new SeriesImage("images/bag.jpg", "bag");
+  new SeriesImage("images/banana.jpg", "banana");
+  new SeriesImage("images/bathroom.jpg", "bathroom");
+  new SeriesImage("images/boots.jpg", "boots");
+  new SeriesImage("images/breakfast.jpg", "breakfast");
+  new SeriesImage("images/bubblegum.jpg", "bubblegum");
+  new SeriesImage("images/chair.jpg", "chair");
+  new SeriesImage("images/cthulhu.jpg", "cthulhu");
+  new SeriesImage("images/dog-duck.jpg", "dog-duck");
+  new SeriesImage("images/dragon.jpg", "dragon");
+  new SeriesImage("images/pen.jpg", "pen");
+  new SeriesImage("images/pet-sweep.jpg", "pet-sweep");
+  new SeriesImage("images/scissors.jpg", "scissors");
+  new SeriesImage("images/shark.jpg", "shark");
+  new SeriesImage("images/sweep.png", "sweep");
+  new SeriesImage("images/tauntaun.jpg", "tauntaun");
+  new SeriesImage("images/unicorn.jpg", "unicorn");
+  new SeriesImage("images/usb.gif", "usb");
+  new SeriesImage("images/water-can.jpg", "water-can");
+  new SeriesImage("images/wine-glass.jpg", "wine-glass");
+  console.log(SeriesImage.allImages);
 }
 
+var imageContainer = document.getElementById("image-container");
+var leftImageDOM = document.getElementById("left-image");
+var centerImageDOM = document.getElementById("center-image");
+var rightImageDOM = document.getElementById("right-image");
+var roundsOfVoting = 25;
 // generates three random images and compares the random images to check and see if they are the same, if they happen to be it will change the image. Uses a while loop to check
 function generateRandomImages() {
   var leftIndex = Math.floor(Math.random() * SeriesImage.allImages.length);
@@ -125,7 +115,6 @@ function renderImages(leftImage, centerImage, rightImage) {
 }
 
 // Click Event Listener and Event Listener removal
-var totalClicks = 0;
 imageContainer.addEventListener("click", addClickCount);
 
 function addClickCount(event) {
